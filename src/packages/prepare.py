@@ -32,6 +32,5 @@ if __name__ == "__main__":
         return None
     config = load_json("src/config.json")
     
-    print(config)
     CompileGenerator()
     CompileSolution(config["config"]["language"], "c++")
