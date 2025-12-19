@@ -5,10 +5,10 @@
         "author": "hungg261"
     },
 
-    "configs": {
+    "config": {
         "language": {
-            "python": "src/solutions/Python",
-            "cpp": "src/solutions/CPP"
+            "python": ["src/solutions/Python", ".py"],
+            "c++": ["src/solutions/CPP", ".cpp"]
         }
     }
 }
