@@ -2,7 +2,7 @@
 using namespace std;
 
 void solve(){
-    long long n;
+    int n;
     cin >> n;
 
     cout << (n * n) << '\n';

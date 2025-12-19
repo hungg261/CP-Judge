@@ -1,16 +1,5 @@
 import subprocess
 import shutil
-import json
-
-def load_json(path):
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        print(f"{path} not found")
-    except json.JSONDecodeError:
-        print(f"{path} is not valid JSON")
-    return None
 
 def CompileGenerator():
     subprocess.run(["g++", "src/generator/generator.cpp", "-o", "src/bin/generator.exe"])
@@ -30,8 +19,19 @@ def CompileSolution(conf, lang):
                    check=True)
 
 if __name__ == "__main__":
+    import json
+
+    def load_json(path):
+        try:
+            with open(path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except FileNotFoundError:
+            print(f"{path} not found")
+        except json.JSONDecodeError:
+            print(f"{path} is not valid JSON")
+        return None
     config = load_json("src/config.json")
     
     print(config)
     CompileGenerator()
-    CompileSolution(config["config"]["language"], "python")
+    CompileSolution(config["config"]["language"], "c++")
