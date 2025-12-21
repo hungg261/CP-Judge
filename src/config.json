@@ -8,7 +8,7 @@
     "config": {
         "tests-count": 100,
         "languages": {
-            "brute_force": "python",
+            "brute_force": "c++",
             "solution": "python"
         }
     }

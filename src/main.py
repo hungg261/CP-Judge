@@ -39,27 +39,43 @@ class Instance:
         
         return TCase.accepted()
         
-    def Run(self):
+    def SampleRun(self, output=True):
         for test in range(1, self.NTEST + 1):
-            print(f"Running test #{test}:")
+            if output:
+                print(f"Running test #{test}:")
             
             if(not self.RunTest(test)):
-                print("WRONG ANSWER!")
+                if output:
+                    print("WRONG ANSWER!")
                 return False
             
-            print("CORRECT")
+            if output:
+                print("CORRECT")
         
         return True
 
 if __name__ == "__main__":
-    config = load_config("src/config.json")
     
-    ins = Instance(NTEST=69)
-    ins.init()
+    import threading
     
-    print(ins.Run())
+    def test_run(id, ntest):
+        ins = Instance(NTEST=ntest)
+        ins.init()
+        
+        ins.SampleRun(output=False)
+        print(f"[!] #{id} - Finished")
+
+    t1 = threading.Thread(target=test_run, args=(1,100,))
+    t2 = threading.Thread(target=test_run, args=(2,69,))
+    t3 = threading.Thread(target=test_run, args=(3,58,))
+    t4 = threading.Thread(target=test_run, args=(4,14,))
     
-    ins2 = Instance(NTEST=5)
-    ins2.init()
+    t1.start()
+    t2.start()
+    t3.start()
+    t4.start()
     
-    print(ins2.Run())
+    t1.join()
+    t2.join()
+    t3.join()
+    t4.join()
