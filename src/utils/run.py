@@ -7,29 +7,29 @@ import os
 
 def GenerateTest(test, sessionID):
     with open(f"src/data/{sessionID}/test_case.inp", "wb") as finp:
-        subprocess.run(["src/scripts/generator.exe", str(test)], stdout=finp, check=True)
+        subprocess.run([f"src/scripts/{sessionID}/generator.exe", str(test)], stdout=finp, check=True)
 
 class Python:
     @staticmethod
     def BruteForce(sessionID):
         with open(f"src/data/{sessionID}/test_case.inp", "rb") as input, open(f"src/data/{sessionID}/brute_force.out", "wb") as output:
-            subprocess.run([sys.executable, "src/scripts/brute_force.py"], stdin=input, stdout=output, check=True)
+            subprocess.run([sys.executable, f"src/scripts/{sessionID}/brute_force.py"], stdin=input, stdout=output, check=True)
           
     @staticmethod  
     def Solution(sessionID):
         with open(f"src/data/{sessionID}/test_case.inp", "rb") as input, open(f"src/data/{sessionID}/solution.out", "wb") as output:
-            subprocess.run([sys.executable, "src/scripts/solution.py"], stdin=input, stdout=output, check=True)
+            subprocess.run([sys.executable, f"src/scripts/{sessionID}/solution.py"], stdin=input, stdout=output, check=True)
 
 class CPP:
     @staticmethod
     def BruteForce(sessionID):
         with open(f"src/data/{sessionID}/test_case.inp", "rb") as input, open(f"src/data/{sessionID}/brute_force.out", "wb") as output:
-            subprocess.run(["src/scripts/brute_force.exe"], stdin=input, stdout=output, check=True)
+            subprocess.run([f"src/scripts/{sessionID}/brute_force.exe"], stdin=input, stdout=output, check=True)
             
     @staticmethod
     def Solution(sessionID):
         with open(f"src/data/{sessionID}/test_case.inp", "rb") as input, open(f"src/data/{sessionID}/solution.out", "wb") as output:
-            subprocess.run(["src/scripts/solution.exe"], stdin=input, stdout=output, check=True)
+            subprocess.run([f"src/scripts/{sessionID}/solution.exe"], stdin=input, stdout=output, check=True)
 
 
 def Run_BruteForce(lang, sessionID):
@@ -50,7 +50,9 @@ def RunSolvers(brute_lang, sol_lang, sessionID):
 
 if __name__ == "__main__":
     if not os.path.exists(f"src/data/{1}"):
-        os.mkdir(f"src/data/{1}")
+        os.makedirs(f"src/data/{1}")
+    if not os.path.exists(f"src/scripts/1"):
+        os.makedirs(f"src/scripts/{1}")
     
     GenerateTest(36, 1)
     

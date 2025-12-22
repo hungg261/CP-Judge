@@ -1,16 +1,7 @@
 from utils.classes import TestCase, Compile
-import json
+from utils.file import load_config
 import os
-
-def load_config(path):
-    try:
-        with open(path, "r", encoding="utf-8") as f:
-            return json.load(f)
-    except FileNotFoundError:
-        print(f"{path} not found")
-    except json.JSONDecodeError:
-        print(f"{path} is not valid JSON")
-    return None
+import uuid
 
 WORKSPACE_COUNTER = 0
 CONFIG = load_config("src/config.json")
@@ -25,7 +16,7 @@ class Instance:
         if sessionID is None:
             global WORKSPACE_COUNTER
             
-            self.sessionID = "workspace-" + str(WORKSPACE_COUNTER).zfill(2)
+            self.sessionID = "workspace-" + uuid.uuid4().hex
             WORKSPACE_COUNTER += 1
     
     def init(self):
@@ -55,8 +46,8 @@ class Instance:
         return True
 
 if __name__ == "__main__":
-    
     import threading
+    import random
     
     def test_run(id, ntest):
         ins = Instance(NTEST=ntest)
@@ -65,26 +56,18 @@ if __name__ == "__main__":
         ins.SampleRun(output=False)
         print(f"[!] #{id} - Finished")
 
-    t1 = threading.Thread(target=test_run, args=(1, 100,))
-    t2 = threading.Thread(target=test_run, args=(2, 69,))
-    t3 = threading.Thread(target=test_run, args=(3, 58,))
-    t4 = threading.Thread(target=test_run, args=(4, 14,))
-    t5 = threading.Thread(target=test_run, args=(5, 5,))
-    t6 = threading.Thread(target=test_run, args=(6, 57,))
+    lthread = []
+    for i in range(10):
+        nt = random.randint(1, 100)
+        print(f"#{i}: ", nt)
+        
+        thread = threading.Thread(target=test_run, args=(i, nt))
+        thread.start()
+        
+        lthread.append(thread)
     
-    t1.start()
-    t2.start()
-    t3.start()
-    t4.start()
-    t5.start()
-    t6.start()
+    for t in lthread:
+        t.join()
     
-    t1.join()
-    t2.join()
-    t3.join()
-    t4.join()
-    t5.join()
-    t6.join()
-    
-    from utils.clean import cleanup_workspaces
-    cleanup_workspaces()
+    # from utils.clean import cleanup_workspaces
+    # cleanup_workspaces("workspace-*")

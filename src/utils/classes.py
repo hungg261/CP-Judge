@@ -5,7 +5,7 @@ import os
 
 def Compile(brute_lang, sol_lang, sessionID):
     if not os.path.exists(f"src/scripts/{sessionID}"):
-        os.mkdir(f"src/scripts/{sessionID}")
+        os.makedirs(f"src/scripts/{sessionID}", exist_ok=True)
     
     CompileGenerator(sessionID)
     CompileSolvers(brute_lang, sol_lang, sessionID)

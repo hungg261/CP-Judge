@@ -28,7 +28,9 @@ class CPP:
 
 
 def CompileGenerator(sessionID):
-    subprocess.run(["g++", "src/generator/generator.cpp", "-o", f"src/scripts/{sessionID}/generator.exe"])
+    subprocess.run(["g++", "src/generator/generator.cpp", "-o",
+                    f"src/scripts/{sessionID}/generator.exe"],
+                    check=True)
 
 def Compile_BruteForce(lang, sessionID):
     match lang:
