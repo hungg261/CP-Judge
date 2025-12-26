@@ -11,5 +11,10 @@
             "brute_force": "c++",
             "solution": "python"
         }
+    },
+
+    "gui": {
+        "theme": "blue",
+        "mode": "light"
     }
 }
