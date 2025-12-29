@@ -70,7 +70,7 @@ if __name__ == "__main__":
     # ins.SampleRun()
 
     lthread = []
-    for i in range(1):
+    for i in range(10):
         nt = random.randint(1, 100)
         print(f"#{i}: ", nt)
         
